@@ -1,7 +1,7 @@
 {
   "name": "RochanneLife",
   "short_name": "Life",
-  "start_url": "rochanne-life.html",
+ "start_url": "LunoxiLife.html"
   "display": "standalone",
   "background_color": "#ffd6e0",
   "theme_color": "#ffd6e0",
@@ -13,3 +13,4 @@
     }
   ]
 }
+
