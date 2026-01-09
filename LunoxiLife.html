@@ -1,208 +1,137 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="RochanneLife">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<link rel="apple-touch-icon" href="Icoon.png">
-<link rel="manifest" href="manifest.json">
+  <!-- iOS / PWA instellingen -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="LunoxiLife" />
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RochanneLife</title>
+  <!-- Zorgt dat paden altijd kloppen -->
+  <base href="./">
 
-<style>
-body {
-    margin: 0;
-    font-family: system-ui, sans-serif;
-    background: linear-gradient(135deg, #ffd6e0, #c1d8ff);
-}
+  <!-- Icoon & manifest -->
+  <link rel="apple-touch-icon" href="Icoon.png" />
+  <link rel="manifest" href="manifest.json" />
 
-.app {
-    max-width: 420px;
-    margin: auto;
-    padding: 16px;
-}
+  <title>LunoxiLife</title>
 
-.card {
-    background: white;
-    border-radius: 16px;
-    padding: 14px;
-    margin-bottom: 12px;
-    box-shadow: 0 8px 16px rgba(0,0,0,.1);
-}
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, sans-serif;
+      background: linear-gradient(135deg, #ffd6e0, #c1d8ff);
+    }
 
-h1 { text-align:center; }
+    .app {
+      max-width: 420px;
+      margin: auto;
+      padding: 16px;
+    }
 
-.stats div {
-    display:flex;
-    justify-content:space-between;
-    margin:4px 0;
-}
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 14px;
+      margin-bottom: 12px;
+      box-shadow: 0 8px 16px rgba(0,0,0,.1);
+    }
 
-button {
-    width:100%;
-    padding:12px;
-    border:none;
-    border-radius:12px;
-    margin-top:6px;
-    background:#6c7cff;
-    color:white;
-    font-size:15px;
-}
+    h1 {
+      text-align: center;
+    }
 
-button.alt { background:#ff8fab; }
-button.warn { background:#ff6f61; }
-</style>
+    .stats div {
+      display: flex;
+      justify-content: space-between;
+      margin: 4px 0;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 12px;
+      margin-top: 6px;
+      background: #6c7cff;
+      color: white;
+      font-size: 15px;
+    }
+
+    button.alt { background: #ff8fab; }
+  </style>
 </head>
 
 <body>
 
 <div class="app">
-<h1>🌸 RochanneLife 🌸</h1>
+  <h1>🌸 LunoxiLife 🌸</h1>
 
-<div class="card">
-<strong>Leeftijd:</strong> <span id="age">16</span>
-</div>
+  <div class="card">
+    <strong>Leeftijd:</strong> <span id="age">16</span>
+  </div>
 
-<div class="card stats">
-<div>😊 Geluk <span id="happiness"></span></div>
-<div>❤️ Gezondheid <span id="health"></span></div>
-<div>⚡ Energie <span id="energy"></span></div>
-<div>💰 Geld €<span id="money"></span></div>
-<div>❤️‍🔥 Relaties <span id="relationships"></span></div>
-</div>
+  <div class="card stats">
+    <div>😊 Geluk <span id="happiness">70</span></div>
+    <div>❤️ Gezondheid <span id="health">80</span></div>
+    <div>⚡ Energie <span id="energy">75</span></div>
+    <div>💰 Geld €<span id="money">100</span></div>
+  </div>
 
-<div class="card">
-🐰 Konijn: <span id="pet">Geen</span><br>
-🚀 Bedrijf: <span id="business">Geen</span><br>
-📈 Bedrijfslevel: <span id="bizlevel">0</span>
-</div>
+  <div class="card" id="event">
+    Welkom bij LunoxiLife 🌱
+  </div>
 
-<div class="card" id="event">Je leven begint. Maak slimme keuzes 👀</div>
-
-<div class="card">
-<button onclick="study()">📚 Studeren</button>
-<button onclick="work()">💼 Werken</button>
-<button onclick="selfcare()" class="alt">🛁 Selfcare</button>
-<button onclick="social()">👯 Sociaal</button>
-<button onclick="adoptPet()">🐰 Konijn adopteren</button>
-<button onclick="carePet()">🥕 Konijn verzorgen</button>
-<button onclick="startBusiness()">🚀 Bedrijf starten</button>
-<button onclick="upgradeBusiness()">📈 Bedrijf upgraden</button>
-<button onclick="saveGame()">💾 Opslaan</button>
-<button onclick="loadGame()">📂 Laden</button>
-</div>
+  <div class="card">
+    <button onclick="nextYear()">➡️ Volgend jaar</button>
+  </div>
 </div>
 
 <script>
-let age=16,happiness=70,health=80,energy=75,money=100,relationships=60;
-let pet=false,petCare=3;
-let business=false,bizLevel=0;
+  let age = 16;
+  let happiness = 70;
+  let health = 80;
+  let energy = 75;
+  let money = 100;
 
-const names=["Sam","Lina","Noah","Mila","Jay","Alex"];
+  function nextYear() {
+    age++;
+    happiness += rand(-5, 10);
+    health += rand(-5, 5);
+    energy += rand(-10, 5);
+    money += rand(-20, 40);
 
-function updateUI(){
-    ageEl.innerText=age;
-    happinessEl.innerText=happiness;
-    healthEl.innerText=health;
-    energyEl.innerText=energy;
-    moneyEl.innerText=money;
-    relationshipsEl.innerText=relationships;
-    petEl.innerText=pet?`Konijn 🐰 (${petCare})`:"Geen";
-    businessEl.innerText=business?"Actief 🚀":"Geen";
-    bizlevelEl.innerText=bizLevel;
-}
-
-function yearPass(){
-    age++; energy-=5; petCare--;
-    if(petCare<=0 && pet){
-        happiness-=10; eventEl.innerText="🐰 Je vergat je konijn… het is boos 😭";
-    }
-    randomEvent();
-    clampAll(); updateUI();
-}
-
-function randomEvent(){
-    if(Math.random()<0.3){
-        const name=names[Math.floor(Math.random()*names.length)];
-        relationships+=5;
-        eventEl.innerText=`❤️ Je bouwt een band op met ${name}.`;
-    }
-}
-
-function study(){ yearPass(); happiness+=3; energy-=4; eventEl.innerText="📚 Je focust op school."; }
-function work(){ yearPass(); money+=business?80:40; energy-=6; happiness-=2; eventEl.innerText="💼 Je werkt hard."; }
-function selfcare(){ yearPass(); happiness+=10; health+=6; energy+=8; money-=10; eventEl.innerText="🛁 Selfcare was nodig."; }
-function social(){ yearPass(); relationships+=10; happiness+=5; eventEl.innerText="👯 Je sociale leven bloeit."; }
-
-function adoptPet(){
-    if(pet){ eventEl.innerText="🐰 Je hebt al een konijn."; return; }
-    if(money<30){ eventEl.innerText="💸 Te weinig geld."; return; }
-    pet=true; petCare=3; money-=30; happiness+=8;
-    eventEl.innerText="🐰 Je adopteert een schattig konijn!";
-}
-
-function carePet(){
-    if(!pet){ eventEl.innerText="❌ Geen huisdier."; return; }
-    petCare=3; happiness+=4;
-    eventEl.innerText="🥕 Je verzorgt je konijn.";
-}
-
-function startBusiness(){
-    if(business){ eventEl.innerText="🚀 Je bedrijf draait al."; return; }
-    if(money<50){ eventEl.innerText="💸 Niet genoeg startkapitaal."; return; }
-    business=true; bizLevel=1; money-=50;
-    eventEl.innerText="🚀 Je start je eigen bedrijf!";
-}
-
-function upgradeBusiness(){
-    if(!business){ eventEl.innerText="❌ Geen bedrijf."; return; }
-    const cost=50*bizLevel;
-    if(money<cost){ eventEl.innerText="💸 Upgrade te duur."; return; }
-    money-=cost; bizLevel++; happiness+=3;
-    eventEl.innerText="📈 Je bedrijf groeit!";
-}
-
-function saveGame(){
-    localStorage.setItem("life",JSON.stringify({
-        age,happiness,health,energy,money,relationships,pet,petCare,business,bizLevel
-    }));
-    eventEl.innerText="💾 Opgeslagen!";
-}
-
-function loadGame(){
-    const data=JSON.parse(localStorage.getItem("life"));
-    if(!data){ eventEl.innerText="❌ Geen save."; return; }
-    Object.assign(window,data);
-    eventEl.innerText="📂 Save geladen!";
+    clampAll();
     updateUI();
-}
 
-function clampAll(){
-    happiness=clamp(happiness);
-    health=clamp(health);
-    energy=clamp(energy);
-    relationships=clamp(relationships);
-}
+    document.getElementById("event").innerText =
+      "Een nieuw jaar breekt aan 🌱";
+  }
 
-function clamp(v){ return Math.max(0,Math.min(100,v)); }
+  function updateUI() {
+    document.getElementById("age").innerText = age;
+    document.getElementById("happiness").innerText = happiness;
+    document.getElementById("health").innerText = health;
+    document.getElementById("energy").innerText = energy;
+    document.getElementById("money").innerText = money;
+  }
 
-const ageEl=ageSpan=document.getElementById("age");
-const happinessEl=document.getElementById("happiness");
-const healthEl=document.getElementById("health");
-const energyEl=document.getElementById("energy");
-const moneyEl=document.getElementById("money");
-const relationshipsEl=document.getElementById("relationships");
-const petEl=document.getElementById("pet");
-const businessEl=document.getElementById("business");
-const bizlevelEl=document.getElementById("bizlevel");
-const eventEl=document.getElementById("event");
+  function clampAll() {
+    happiness = clamp(happiness);
+    health = clamp(health);
+    energy = clamp(energy);
+  }
 
-updateUI();
+  function clamp(v) {
+    return Math.max(0, Math.min(100, v));
+  }
+
+  function rand(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
 </script>
 
 </body>
 </html>
-
